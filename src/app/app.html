@@ -1,0 +1,265 @@
+<div class="nebula-bg" aria-hidden="true">
+  <div class="nebula-blob b1"></div>
+  <div class="nebula-blob b2"></div>
+  <div class="nebula-blob b3"></div>
+  <div class="nebula-blob b4"></div>
+</div>
+<canvas #starsCanvas id="stars-canvas" aria-hidden="true"></canvas>
+
+<nav
+  class="navbar navbar-expand-lg fixed-top custom-navbar"
+  [class.scrolled]="isScrolled"
+>
+  <div class="container">
+    <a class="navbar-brand brand-logo" href="#topo" (click)="closeMenu()">
+      <span class="brand-dot"></span> gk.
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      aria-controls="navMenu"
+      [attr.aria-expanded]="isMenuOpen"
+      [attr.aria-label]="
+        isMenuOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação'
+      "
+      (click)="toggleMenu()"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      id="navMenu"
+      class="collapse navbar-collapse justify-content-end"
+      [class.show]="isMenuOpen"
+    >
+      <ul class="navbar-nav align-items-center gap-lg-2">
+        <li class="nav-item">
+          <a class="nav-link" href="#sobre" (click)="closeMenu()">Sobre</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#projetos" (click)="closeMenu()"
+            >Projetos</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#contato" (click)="closeMenu()"
+            >Contato</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<header id="topo" class="hero">
+  <div class="container">
+    <div class="col-lg-9">
+      <h1 class="hero-title">
+        <span class="d-block">Giovanna</span>
+        <span class="d-block gradient-text">Kethleen</span>
+      </h1>
+      <p class="hero-subtitle">
+        {{ role }} na <strong>{{ company }}</strong
+        >.<br />
+        Construo produtos com
+        @for (technology of stack; track technology; let last = $last) {
+          <strong>{{ technology }}</strong>@if (!last) {
+            @if ($index === stack.length - 2) {
+              e
+            } @else {
+              ,
+            }
+          }
+        }.
+      </p>
+      <div class="d-flex flex-wrap gap-3 mt-4">
+        <a href="#projetos" class="btn btn-gradient"
+          >Ver projetos <i class="bi bi-arrow-up-right"></i
+        ></a>
+        <a
+          [href]="linkedin"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-glass"
+          ><i class="bi bi-linkedin"></i> LinkedIn</a
+        >
+      </div>
+    </div>
+  </div>
+  <a href="#sobre" class="scroll-indicator" aria-label="Rolar para sobre">
+    <i class="bi bi-chevron-down"></i>
+  </a>
+</header>
+
+<main>
+  <section id="sobre" class="section-padding">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-4">
+          <span class="section-label">SOBRE</span>
+          <h2 class="section-title">
+            Engenharia de software<br />com foco em entrega.
+          </h2>
+        </div>
+        <div class="col-lg-7 offset-lg-1">
+          <p class="lead-text">
+            Sou {{ role }} na <strong>{{ company }}</strong>, onde trabalho com
+            <strong>PHP</strong>, <strong>Laravel</strong> no back-end e
+            <strong>Angular</strong> no front-end.
+          </p>
+          <p class="lead-text muted">
+            Gosto de código limpo, arquitetura bem pensada e produtos que
+            resolvem problemas reais. Estou sempre buscando aprender algo novo e
+            melhorar o que já existe.
+          </p>
+          <div class="row mt-5 g-4">
+            @for (skill of skills; track skill.title) {
+              <div class="col-md-4">
+                <div class="skill-card">
+                  <i class="bi {{ skill.icon }}"></i>
+                  <h5>{{ skill.title }}</h5>
+                  <p>{{ skill.description }}</p>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projetos" class="section-padding">
+    <div class="container">
+      <div
+        class="d-flex justify-content-between align-items-end flex-wrap mb-5 gap-3"
+      >
+        <div>
+          <span class="section-label">PROJETOS</span>
+          <h2 class="section-title mb-0">Trabalhos selecionados</h2>
+        </div>
+        <a
+          [href]="github"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-glass"
+          ><i class="bi bi-github"></i> github</a
+        >
+      </div>
+      <div class="row g-4">
+        @for (project of projects; track project.number; let first = $first) {
+          <div class="col-md-6">
+            @if (project.github) {
+              <div class="project-card-link">
+                <div class="project-card" [class.featured]="first">
+                  <div class="project-top">
+                    <span class="project-number">{{ project.number }}</span>
+                    <div class="project-actions">
+                      <a
+                        [href]="project.link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="project-action"
+                        [attr.aria-label]="'Jogar ' + project.title"
+                        ><span>Jogar</span>
+                        <i class="bi bi-box-arrow-up-right"></i
+                      ></a>
+                      <a
+                        [href]="project.github"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="project-action"
+                        [attr.aria-label]="'Ver código de ' + project.title"
+                        ><i class="bi bi-github"></i> <span>Código</span></a
+                      >
+                    </div>
+                  </div>
+                  <h3 class="project-title">{{ project.title }}</h3>
+                  <p class="project-desc">{{ project.description }}</p>
+                  <div class="project-tags">
+                    @for (tag of project.tags; track tag) {
+                      <span class="tag-pill">{{ tag }}</span>
+                    }
+                  </div>
+                </div>
+              </div>
+            } @else {
+              <a
+                [href]="project.link"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="project-card-link"
+              >
+                <div class="project-card" [class.featured]="first">
+                  <div class="project-top">
+                    <span class="project-number">{{ project.number }}</span>
+                    <i class="bi bi-arrow-up-right project-arrow"></i>
+                  </div>
+                  <h3 class="project-title">{{ project.title }}</h3>
+                  <p class="project-desc">{{ project.description }}</p>
+                  <div class="project-tags">
+                    @for (tag of project.tags; track tag) {
+                      <span class="tag-pill">{{ tag }}</span>
+                    }
+                  </div>
+                </div>
+              </a>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="contato" class="section-padding">
+    <div class="container">
+      <div class="contact-wrapper">
+        <div class="contact-orbit" aria-hidden="true">
+          <div class="orbit-ring r1"></div>
+          <div class="orbit-ring r2"></div>
+          <div class="orbit-dot d1"></div>
+          <div class="orbit-dot d2"></div>
+          <div class="orbit-dot d3"></div>
+        </div>
+        <div class="row align-items-center g-5">
+          <div class="col-lg-5">
+            <span class="section-label">CONTATO</span>
+            <h2 class="contact-title">
+              Vamos criar algo<br /><span class="gradient-text"
+                >fora desse mundo</span
+              >?
+            </h2>
+            <p class="lead-text mt-3">
+              Estou aberta a novas oportunidades, colaborações e boas conversas
+              sobre tecnologia. Escolha o canal que preferir.
+            </p>
+          </div>
+          <div class="col-lg-7">
+            <div class="contact-channels">
+              @for (contact of contacts; track contact.title) {
+                <a
+                  [href]="contact.link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="contact-channel"
+                  [class.featured]="contact.featured"
+                >
+                  <div class="channel-icon">
+                    <i class="bi {{ contact.icon }}"></i>
+                  </div>
+                  <div class="channel-text">
+                    <h5>{{ contact.title }}</h5>
+                    <p>{{ contact.description }}</p>
+                  </div>
+                  <i class="bi bi-arrow-up-right channel-arrow"></i>
+                </a>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer text-center">
+  <p>&copy; {{ year }} {{ name }}</p>
+</footer>
